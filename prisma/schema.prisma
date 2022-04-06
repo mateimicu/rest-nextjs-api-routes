@@ -1,10 +1,11 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["dataProxy"]
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -12,14 +13,6 @@ model User {
   email String  @unique
   name  String?
   posts Post[]
- profile Profile?
-}
-
-model Profile {
-  id     Int     @default(autoincrement()) @id
-  bio    String?
-  userId Int     @unique
-  user   User    @relation(fields: [userId], references: [id])
 }
 
 model Post {
